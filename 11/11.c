@@ -1,3 +1,4 @@
+  
 #include<stdio.h>
 #include<stdlib.h>
 #include<sys/stat.h>
@@ -6,18 +7,24 @@
 #include<time.h>
 #include<fcntl.h>
 
-int main(){
-    struct utimbuf times;
-    struct stat mystat;
-    umask(0600);
-    if(creat("source2.txt",0666)<0){
-        printf("Error");
-        return 0;
-    }
-    stat("source2.txt",&mystat);
-    times.actime=mystat.st_atime;
-    times.modtime=mystat.st_mtime;
-    utime("source2.txt",&times);
-    printf("%s %s",ctime(&times.actime),ctime(&times.modtime));
-    printf("%s %s",ctime(&mystat.st_atime),ctime(&mystat.st_mtime));
+int main()
+{
+	struct stat statfile;
+	struct utimbuf times;
+
+	umask(0600);
+
+	if(creat("source.txt", 0666) < 0)
+	{
+		printf("Error.");
+		return 0;
+	}
+
+	stat("source.txt", &statfile);
+	times.actime = statfile.st_atime;
+	times.modtime = statfile.st_mtime;
+	utime("source.txt", &times);
+
+	printf("\n\n%s\n%s", ctime(&times.actime), ctime(&times.modtime));
+	printf("\n\n%s\n%s", ctime(&statfile.st_atime), ctime(&statfile.st_mtime));
 }
