@@ -12,7 +12,7 @@ int main()
 	struct stat statfile;
 	struct utimbuf times;
 
-	umask(0600);
+	umask(0066);
 
 	if(creat("source.txt", 0666) < 0)
 	{
@@ -25,6 +25,6 @@ int main()
 	times.modtime = statfile.st_mtime;
 	utime("source.txt", &times);
 
-	printf("\n\n%s\n%s", ctime(&times.actime), ctime(&times.modtime));
-	printf("\n\n%s\n%s", ctime(&statfile.st_atime), ctime(&statfile.st_mtime));
+	printf("\n\n%s%s", ctime(&times.actime), ctime(&times.modtime));
+	printf("\n\n%s%s", ctime(&statfile.st_atime), ctime(&statfile.st_mtime));
 }
