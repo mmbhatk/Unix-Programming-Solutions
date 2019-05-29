@@ -14,11 +14,7 @@ int main()
 
 	umask(0066);
 
-	if(creat("source.txt", 0666) < 0)
-	{
-		printf("Error.");
-		return 0;
-	}
+	if(creat("source.txt", 0666) < 0) {printf("Error."); return 0;}
 
 	stat("source.txt", &statfile);
 	times.actime = statfile.st_atime;
